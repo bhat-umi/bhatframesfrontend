@@ -21,10 +21,10 @@ const login=()=>{
     const empid=formData.get("empid"); 
     const password=formData.get("password"); 
     console.log(empid,password);
-    const url=`${baseUrl}/login`
+    const url=`${baseUrl}/users/login`
     const data={
        emp_id: empid,
-        password
+       password:password
     }
     fetch(url,{
         method:'POST',
