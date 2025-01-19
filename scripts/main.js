@@ -33,3 +33,36 @@ export function removeAuthToken() {
         console.warn('No token found to remove');
     }
 }
+
+export function fetchEmployeeDetail(id)
+{
+    const url = `${baseUrl}/fetchDetails`;
+    const token = getAuthToken() ;
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({ id }) 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+            console.log('Employee Details:', data);
+    })
+    .catch(error => {
+        console.error('Error fetching employee details:', error)});
+}
+
+export function logOut()
+{
+    removeAuthToken();
+    window.location.href="index.html";
+}
+document.querySelector("#logOutButton").addEventListener("click",logOut)
