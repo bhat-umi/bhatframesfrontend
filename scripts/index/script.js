@@ -1,6 +1,6 @@
 import baseUrl from "../main.js";
 
-import { setAuthToken,getAuthToken,removeAuthToken } from "../main.js";
+import { setToken,getToken,removeToken } from "../main.js";
 
 const loginButton=document.querySelector("#loginbutton");
 loginButton.addEventListener("click",(e)=>{
@@ -43,15 +43,18 @@ const login=()=>{
       })
     .then((res)=>
 {
-    setAuthToken("acasfsa");
+    setToken('access_token',res['access_token']);
+    setToken('refresh_token',res['refresh_token'])
 
     console.log(res);
+    window.location.href="./home.html"
 })
 .catch((res)=>{
     document.querySelector("#error-message").classList.add("alert-danger")
     document.querySelector("#error-message").classList.remove("alert-info")
     document.querySelector("#error-message").textContent="Invalid Empid or password"
     console.log(res);
+    
 })
 
 
