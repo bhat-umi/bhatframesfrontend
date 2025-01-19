@@ -46,42 +46,54 @@
         <div class="container mt-4 ">
             <div class="row">
                 <div class="col">
-                <div class="alert alert-info p-3">
-                    <strong>
+                <div class="alert alert-info p-3" id="error-message">
+                    
                     Please login
-                </strong>
+               
                 </div>
             </div> 
             </div>
             <div class="row ">
-                
+                 <form id="loginform" >
                     <div class="mb-1 form-floating">
                         <input
-                        type="email"
+                        type="text"
                         class="form-control"
-                        name=""
-                        id=""
+                        name="empid"
+                        id="empid"
                         aria-describedby="emailHelpId"
-                        placeholder="abc@mail.com"
+                        placeholder="BH10073"
+                        required 
+                        pattern="^[a-zA-Z0-9]{5,}$"
                         />
-                        <label for="" class="form-label">Email</label>
+                        <label for="" class="form-label">EmpID</label>
+                        <div class="invalid-feedback">
+                            Invalid EmpID
+                             </div>
   
                     </div>
                     <div class="mb-3 form-floating">
                         <input
                         type="password"
                         class="form-control"
-                        name=""
-                        id=""
-                        placeholder=""
+                        name="password"
+                        id="password"
+                        placeholder="*****"
+                        required
+                        minlength="8"
                         />
                         <label for="" class="form-label">Password</label>
+                        <div class="invalid-feedback">
+                         Invalid Password
+                          </div>
                     </div>
+                    
                     <div class="mb-3 form-group">
-                    <button class="btn btn-primary form-control" id="loginbutton">
+                    <a class="btn btn-primary form-control" id="loginbutton">
                         Login
-                    </button>
+                    </a>
                     </div>
+                </form>
 
 
                     
