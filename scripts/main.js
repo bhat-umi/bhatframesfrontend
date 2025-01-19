@@ -36,11 +36,11 @@ export function removeToken(name) {
 
 export function fetchEmployeeDetail()
 {
-    const url = `${baseUrl}/fetchDetails`;
+    const url = `${baseUrl}/users/get_employee_name`;
     const token = getToken('access_token') ;
 
     fetch(url, {
-        method: 'POST',
+        method: 'get',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` 
@@ -53,7 +53,9 @@ export function fetchEmployeeDetail()
         return response.json();
     })
     .then(data => {
-            console.log('Employee Details:', data);
+        let name=data['emp_name']
+        console.log('Employee Details:', data);
+        document.querySelector("#empusername").textContent=name;
     })
     .catch(error => {
         console.error('Error fetching employee details:', error)});

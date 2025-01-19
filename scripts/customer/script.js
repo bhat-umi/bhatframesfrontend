@@ -1,3 +1,5 @@
+import { fetchEmployeeDetail } from "../main.js";
+fetchEmployeeDetail();
 const customers=[
     {
     name: "Asif  ali",

@@ -1,3 +1,5 @@
+import { fetchEmployeeDetail } from "../main.js";
+fetchEmployeeDetail();
 const paymentDetails = [{
     personName: "Asif Ali",
     phoneNumber: "123-456-7890",
