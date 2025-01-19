@@ -1,4 +1,4 @@
-const baseUrl = "";
+const baseUrl = "http://127.0.0.1:8000";
 export default baseUrl;
 
 
@@ -64,5 +64,10 @@ export function logOut()
 {
     removeAuthToken();
     window.location.href="index.html";
+}   
+const logOutButton=document.querySelector("#logOutButton")
+
+if(logOutButton)
+{
+    addEventListener("click",logOut)
 }
-document.querySelector("#logOutButton").addEventListener("click",logOut)

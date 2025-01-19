@@ -23,7 +23,7 @@ const login=()=>{
     console.log(empid,password);
     const url=`${baseUrl}/login`
     const data={
-        empid,
+       emp_id: empid,
         password
     }
     fetch(url,{
