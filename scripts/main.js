@@ -25,9 +25,9 @@ export function getToken(name) {
 
 
 
-export function removeToken() {
-    if (localStorage.getItem('authToken')) {
-        localStorage.removeItem('authToken'); 
+export function removeToken(name) {
+    if (localStorage.getItem(name)) {
+        localStorage.removeItem(name); 
         console.log('Token removed successfully');
     } else {
         console.warn('No token found to remove');
@@ -61,7 +61,8 @@ export function fetchEmployeeDetail()
 
 export function logOut()
 {
-    removeAuthToken();
+    removeToken('access_token');
+    removeToken('refresh_token');   
     window.location.href="index.html";
 }   
 const logOutButton=document.querySelector("#logOutButton")
