@@ -1,10 +1,13 @@
-const baseUrl=""
+import baseUrl from "../main.js";
+
+import { setAuthToken,getAuthToken,removeAuthToken } from "../main.js";
+
 const loginButton=document.querySelector("#loginbutton");
 loginButton.addEventListener("click",(e)=>{
     login();
    // window.location.href="./home.html"
 })
-
+console.log(baseUrl)
 const login=()=>{
     const loginForm= document.querySelector("#loginform");
     loginForm.classList.add("was-validated");
@@ -40,6 +43,8 @@ const login=()=>{
       })
     .then((res)=>
 {
+    setAuthToken("acasfsa");
+
     console.log(res);
 })
 .catch((res)=>{
