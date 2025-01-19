@@ -62,7 +62,8 @@ export function fetchEmployeeDetail()
 export function logOut()
 {
     removeToken('access_token');
-    removeToken('refresh_token');   
+    removeToken('refresh_token');  
+    console.log("logout done") 
     window.location.href="index.html";
 }   
 const logOutButton=document.querySelector("#logOutButton")
