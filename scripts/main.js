@@ -70,5 +70,5 @@ const logOutButton=document.querySelector("#logOutButton")
 
 if(logOutButton)
 {
-    addEventListener("click",logOut)
+    logOutButton.addEventListener("click",logOut)
 }
