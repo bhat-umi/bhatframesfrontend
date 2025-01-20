@@ -111,7 +111,16 @@
             <!-- Header Section -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Customers</h2>
-                <button class="btn btn-info" title="Create new customer" data-bs-toggle="modal" data-bs-target="#customermodal">
+                <button class="btn btn-info" title="Create new customer"
+                data-action="New"
+                data-fname=""
+                data-lname=""
+                data-contact=""
+                data-address=""
+                data-title=""
+                data-id="-1"
+                data-balance=""
+                data-bs-toggle="modal" data-bs-target="#customermodal">
                     <i class="bi bi-person-plus"></i> New Customer
                 </button>
             </div>
@@ -167,12 +176,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">New Customer</h4>
+                    <h4 class="modal-title" id="action">New Customer</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p><strong>Enter the customer details:</strong></p>
                     <form id="customerForm">
+                        <input type="hidden" name="id" id="id">
                         <div class="form-group mb-3">
                             <label for="title">Title</label>
                             <select class="form-select" id="title" name="title" required>
@@ -189,14 +199,14 @@
                                      type="text"
                                       class="form-control"
                                        placeholder="First Name"
-                                       id="first-name" name="fname"
+                                       id="fname" name="fname"
                                        required 
                         pattern="^[a-zA-Z]{3,}$"
                                        >
                                     <div class="invalid-feedback">Invalid First name</div>
                                 </div>
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="Last Name" id="last-name" name="lname"
+                                    <input type="text" class="form-control" placeholder="Last Name" id="lname" name="lname"
                                     required 
                         pattern="^[a-zA-Z]{3,}$"
                         >

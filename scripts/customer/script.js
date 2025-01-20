@@ -2,24 +2,22 @@ import baseUrl, { fetchEmployeeDetail, getToken } from "../main.js";
 fetchEmployeeDetail();
 const customers=[
     {
-    name: "Asif  ali",
-    phone: "123-456-7890",
-    balance: 3000
+    id:1,
+    fname: "Asif",
+    lname:"ali",
+    phone: "1234567890",
+    balance: 3000,
+    address:"pampore",
+    title:'Mr'
     },
     {
-        name: "Mohd Youis",
-        phone: "123-456-7890",
-        balance: 6700
-    },
-    {
-        name: "Fayaz Mir",
-        phone: "123-456-7890",
-        balance: 300
-    },
-    {
-        name: "Adul",
-        phone: "123-456-7890",
-        balance:9000
+        id:2,
+        fname: "Mohd",
+        lname:'Youis',
+        phone: "1234567890",
+        balance: 6700,
+        address:"pampore",
+        title:'Ms'
     },
 
 ]
@@ -30,7 +28,9 @@ const cardContainer = document.getElementById("card-container");
 
 // Function to create a card
 function createCustomerCard(data) {
-    // Clear existing content
+   let name=data.fname+" "+data.lname;
+   let phone=data.phone.replace(/(\d{4})(\d{3})(\d{3})/, "$1-$2-$3");
+
     
 
     // Create card element
@@ -49,7 +49,7 @@ function createCustomerCard(data) {
 
     const headerLeft = document.createElement("div");
     headerLeft.className = "col-8 card-subtitle text-primary fw-bold text-start  ";
-    headerLeft.innerHTML = `<i class="bi bi-person-circle me-2"></i> ${data.name} (${data.phone})`;
+    headerLeft.innerHTML = `<i class="bi bi-person-circle me-2"></i> ${name} (${phone})`;
 
     const headerRight = document.createElement("div");
     headerRight.className = "col-4 text-end text-danger fw-bold";
@@ -65,13 +65,25 @@ function createCustomerCard(data) {
     // View Button
     const viewButton = document.createElement("button");
     viewButton.className = "btn btn-outline-primary btn-sm";
-    viewButton.innerHTML = `<i class="bi bi-eye me-1"></i> View`;
+    viewButton.setAttribute("data-bs-toggle","modal");
+    viewButton.setAttribute("data-bs-target","#customermodal");
+    ///adding data on this button
+    viewButton.setAttribute("data-fname",data.fname);
+    viewButton.setAttribute("data-lname",data.lname);
+    viewButton.setAttribute("data-address",data.address);
+    viewButton.setAttribute("data-contact",data.phone);
+    viewButton.setAttribute("data-title",data.title);
+    viewButton.setAttribute("data-id",data.id);
+    viewButton.setAttribute("data-balance",data.balance);
+    viewButton.setAttribute("data-action","Update");
+
+    viewButton.innerHTML = `<i class="bi bi-pencil-square me-1"></i> Update`;
     buttonsRow.appendChild(viewButton);
 
     // Call Button
     const callButton = document.createElement("a");
     callButton.className = "btn btn-outline-warning btn-sm";
-    callButton.href = `tel:${data.phone.replace(/-/g, "")}`; // Removes dashes from the phone number
+    callButton.href = `tel:${data.phone}`; // Removes dashes from the phone number
     callButton.innerHTML = `<i class="bi bi-telephone me-1"></i> Call`;
     buttonsRow.appendChild(callButton);
 
@@ -116,7 +128,7 @@ customerForm.classList.add("was-validated");
     saveCustomerButton.innerHTML=`<div class="spinner-border spinner-border-sm" ></div> Saving`
     //prepare data
     let data={
-        id:-1,
+        id:formdata.get('id'),
         title:formdata.get('title'),        
         fname:formdata.get('fname'),
         lname:formdata.get('lname'),
@@ -126,7 +138,7 @@ customerForm.classList.add("was-validated");
 
     }
     const token = getToken('access_token')
-    let url=`${baseUrl}/customers/save`
+    let url=`${baseUrl}/customers/create`
     fetch(url,{
         method:'post',
         headers:{
@@ -134,7 +146,44 @@ customerForm.classList.add("was-validated");
             'Authorization': `Bearer ${token}` 
         },
         body:JSON.stringify(data)
-    }).then()
+    }).then((res)=>{
+        throw new Error("efe")
+    }).catch(res=>{
+
+    saveCustomerButton.innerHTML=tempInnerHtml;
+    saveCustomerButton.classList.remove("disabled");
+    })
     console.log(data)
 }
 saveCustomerButton.addEventListener("click",saveCustomer)
+
+
+const customerModal=document.querySelector("#customermodal")
+customerModal.addEventListener("show.bs.modal",(e)=>{
+    let targetButton=e.relatedTarget;
+    let fname=targetButton.getAttribute("data-fname");
+    let lname=targetButton.getAttribute("data-lname");
+    let address=targetButton.getAttribute("data-address");
+    let contact=targetButton.getAttribute("data-contact");
+    let balance=targetButton.getAttribute("data-balance");
+    let title=targetButton.getAttribute("data-title");
+    let id=targetButton.getAttribute("data-id");
+    let action=targetButton.getAttribute("data-action");
+
+    customerModal.querySelector('#fname').value=fname;
+    customerModal.querySelector('#lname').value=lname;
+    customerModal.querySelector('#address').value=address;
+    customerModal.querySelector('#contact').value=contact;
+    customerModal.querySelector('#balance').value=balance;
+    customerModal.querySelector('#id').value=id;
+    customerModal.querySelector('#title').value=title
+    customerModal.querySelector('#action').textContent=action+" Customer";
+    
+
+
+
+
+    console.log(targetButton.getAttribute("data-fname"));
+   // customerModal.querySelector("fname").value=targetButton.get
+    
+})
