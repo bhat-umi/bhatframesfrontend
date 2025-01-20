@@ -1,4 +1,4 @@
-import { fetchEmployeeDetail } from "../main.js";
+import baseUrl, { fetchEmployeeDetail, getToken } from "../main.js";
 fetchEmployeeDetail();
 const customers=[
     {
@@ -99,3 +99,42 @@ if (customers) {
 } else {
     cardContainer.textContent = "Customers will appear here";
 }
+
+
+const saveCustomerButton=document.querySelector("#saveCustomer");
+const saveCustomer=(e)=>{
+let customerForm=document.querySelector("#customerForm");
+let formdata=new FormData(customerForm);
+customerForm.classList.add("was-validated");
+    if(!customerForm.checkValidity())
+    {
+        console.log("canceled save")
+        //return;
+    }
+    let tempInnerHtml=saveCustomerButton.innerHTML;
+    saveCustomerButton.classList.add("disabled");
+    saveCustomerButton.innerHTML=`<div class="spinner-border spinner-border-sm" ></div> Saving`
+    //prepare data
+    let data={
+        id:-1,
+        title:formdata.get('title'),        
+        fname:formdata.get('fname'),
+        lname:formdata.get('lname'),
+        contact:formdata.get('contact'),
+        address:formdata.get('address'),
+        balance:formdata.get('balance'),
+
+    }
+    const token = getToken('access_token')
+    let url=`${baseUrl}/customers/save`
+    fetch(url,{
+        method:'post',
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}` 
+        },
+        body:JSON.stringify(data)
+    }).then()
+    console.log(data)
+}
+saveCustomerButton.addEventListener("click",saveCustomer)

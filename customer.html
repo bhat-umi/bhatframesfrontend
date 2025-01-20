@@ -172,45 +172,67 @@
                 </div>
                 <div class="modal-body">
                     <p><strong>Enter the customer details:</strong></p>
-                    <form>
+                    <form id="customerForm">
                         <div class="form-group mb-3">
                             <label for="title">Title</label>
-                            <select class="form-select" id="title">
-                                <option>Mr.</option>
-                                <option>Ms.</option>
+                            <select class="form-select" id="title" name="title" required>
+                                
+                                <option value="Mr">Mr.</option>
+                                <option value="Ms">Ms.</option>
                             </select>
                         </div>
                         <div class="form-group mb-3">
                             <label for="name">Name</label>
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="First Name" id="first-name">
+                                    <input
+                                     type="text"
+                                      class="form-control"
+                                       placeholder="First Name"
+                                       id="first-name" name="fname"
+                                       required 
+                        pattern="^[a-zA-Z]{3,}$"
+                                       >
+                                    <div class="invalid-feedback">Invalid First name</div>
                                 </div>
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="Last Name" id="last-name">
+                                    <input type="text" class="form-control" placeholder="Last Name" id="last-name" name="lname"
+                                    required 
+                        pattern="^[a-zA-Z]{3,}$"
+                        >
+                        <div class="invalid-feedback">Invalid Last name</div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="contact">Contact Number</label>
-                            <input type="number" class="form-control" id="contact" placeholder="">
+                            <input type="tel" class="form-control" id="contact" placeholder="" name="contact" required
+                             pattern="^[0-9]{10}$"
+                             min="10"
+                            >
+                            <div class="invalid-feedback">Invalid Contact</div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="">
+                            <input type="text" class="form-control" id="address" placeholder="" name="address" required>
+                            <div class="invalid-feedback">Address is required</div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="balance">Opening Balance</label>
-                            <input type="number" class="form-control" id="balance" placeholder="">
+                            <input type="number" class="form-control" id="balance" placeholder="" name="balance"
+                            required  min="1">
+                            <div class="invalid-feedback">Invalid Opening Balance</div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i> Discard
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <a type="button" class="btn btn-primary " id="saveCustomer">
                         
-                        <i class="bi bi-save"></i> Save</button>
+                        
+                        <i class="bi bi-save" ></i> Save</a>
                 </div>
             </div>
         </div>
