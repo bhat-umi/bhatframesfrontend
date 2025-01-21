@@ -1,26 +1,26 @@
 import baseUrl, { fetchEmployeeDetail, getToken } from "../main.js";
 fetchEmployeeDetail();
-const customers=[
-    {
-    id:1,
-    fname: "Asif",
-    lname:"ali",
-    phone: "1234567890",
-    balance: 3000,
-    address:"pampore",
-    title:'Mr'
-    },
-    {
-        id:2,
-        fname: "Mohd",
-        lname:'Youis',
-        phone: "1234567890",
-        balance: 6700,
-        address:"pampore",
-        title:'Ms'
-    },
+// const customers=[
+//     {
+//     id:1,
+//     fname: "Asif",
+//     lname:"ali",
+//     phone: "1234567890",
+//     balance: 3000,
+//     address:"pampore",
+//     title:'Mr'
+//     },
+//     {
+//         id:2,
+//         fname: "Mohd",
+//         lname:'Youis',
+//         phone: "1234567890",
+//         balance: 6700,
+//         address:"pampore",
+//         title:'Ms'
+//     },
 
-]
+// ]
 
 
 
@@ -102,15 +102,8 @@ function createCustomerCard(data) {
     cardContainer.appendChild(card);
 }
 
-// Check if customer data is available and display accordingly
-if (customers) {
-    cardContainer.innerHTML = "";
-    customers.forEach((customerData)=>
-    createCustomerCard(customerData)
-    );
-} else {
-    cardContainer.textContent = "Customers will appear here";
-}
+
+   
 
 
 const saveCustomerButton=document.querySelector("#saveCustomer");
@@ -215,3 +208,62 @@ customerModal.addEventListener("show.bs.modal",(e)=>{
    // customerModal.querySelector("fname").value=targetButton.get
     
 })
+
+let isLoading=false;
+let fetchRecords=()=> {
+    if (isLoading) return;
+    isLoading = true;
+    let url=`${baseUrl}/customers/read`
+    let token=getToken("access_token");
+    //document.getElementById('loading-text').innerText = 'Loading...';
+    fetch(url,{
+        method:'get',
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}` 
+        }
+    })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Error fetching data');
+    }
+    return response.json(); // Parse the JSON data
+  })
+  .then((data) => {
+    // appendData(data); // Append data to the DOM
+   // offset += limit;
+
+    // Stop loading if no data is returned
+    // if (data.length < limit) {
+    //   document.getElementById('loading-text').innerText = 'No more data to load.';
+    //   window.removeEventListener('scroll', handleScroll);
+    // }
+    cardContainer.textContent="";
+    let customers=data.data;
+    customers.forEach((customer)=>{
+        let carddata={
+    id:customer['id'],
+    fname:customer['customer_first_name'] ,
+    lname:customer['customer_last_name'],
+    phone: customer['customer_contact'],
+    balance: customer['balance']||0,
+    address:customer['customer_address'],
+    title:customer['title']
+
+        }
+        createCustomerCard(carddata)
+
+    })
+    console.log(data)
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+    cardContainer.textContent = "Customers will appear here";
+    //document.getElementById('loading-text').innerText = 'Failed to load data.';
+  })
+  .finally(() => {
+    isLoading = false;
+  });
+
+  }
+  fetchRecords()
