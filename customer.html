@@ -101,7 +101,21 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="toast-container position-absolute start-50  top-100 translate-middle-x" id="toastPlacement">
+                <div class="toast" id="notificationtoast">
+                  <div class="toast-header  bg-success d-flex justify-content-end">
+                
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    
+                  </div>
+                  <div class="toast-body text-center">
+                    
+                  </div>
+                </div>
+              </div>
         </nav>
+        
     </header>
     
     
@@ -180,7 +194,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Enter the customer details:</strong></p>
+                    
+                    <div class="alert alert-danger show d-none" id="errorsavecustomer">
+                        Please try again
+                    </div>
                     <form id="customerForm">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group mb-3">
@@ -231,7 +248,7 @@
                         <div class="form-group mb-3">
                             <label for="balance">Opening Balance</label>
                             <input type="number" class="form-control" id="balance" placeholder="" name="balance"
-                            required  min="1">
+                            required  min="0">
                             <div class="invalid-feedback">Invalid Opening Balance</div>
                         </div>
                     </form>
@@ -247,6 +264,7 @@
             </div>
         </div>
     </div>
+    
     <script type="module" src="./scripts/main.js"></script>
     <script type="module" src="scripts/customer/script.js">
 

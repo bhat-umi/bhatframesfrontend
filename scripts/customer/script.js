@@ -121,7 +121,7 @@ customerForm.classList.add("was-validated");
     if(!customerForm.checkValidity())
     {
         console.log("canceled save")
-        //return;
+        return;
     }
     let tempInnerHtml=saveCustomerButton.innerHTML;
     saveCustomerButton.classList.add("disabled");
@@ -134,7 +134,7 @@ customerForm.classList.add("was-validated");
         lname:formdata.get('lname'),
         contact:formdata.get('contact'),
         address:formdata.get('address'),
-        balance:formdata.get('balance'),
+        balance:parseInt(formdata.get('balance')),
 
     }
     const token = getToken('access_token')
@@ -146,12 +146,31 @@ customerForm.classList.add("was-validated");
             'Authorization': `Bearer ${token}` 
         },
         body:JSON.stringify(data)
-    }).then((res)=>{
-        throw new Error("efe")
+    }).then(res=>{
+        if(!res.ok)
+        {
+            throw new Error(res.statusText);
+        }
+        return res;
+    })
+    .then((res)=>{
+        const modal = bootstrap.Modal.getInstance(customerModal);
+        
+        modal.hide();
+        let toastNotification=document.querySelector("#notificationtoast")
+        toastNotification.querySelector(".toast-body").textContent="Customer saved"
+        const Toast = new bootstrap.Toast(toastNotification);
+        Toast.show();
+        console.log(res);
     }).catch(res=>{
+
+       
 
     saveCustomerButton.innerHTML=tempInnerHtml;
     saveCustomerButton.classList.remove("disabled");
+    customerForm.classList.remove("was-validated");
+    document.querySelector("#errorsavecustomer").classList.remove("d-none");
+    document.querySelector("#errorsavecustomer").textContent=res.message;
     })
     console.log(data)
 }
@@ -159,6 +178,15 @@ saveCustomerButton.addEventListener("click",saveCustomer)
 
 
 const customerModal=document.querySelector("#customermodal")
+customerModal.addEventListener('hide.bs.modal',(e)=>{
+    document.querySelector("#errorsavecustomer").classList.add("d-none");
+    saveCustomerButton.innerHTML=`<i class="bi bi-save"></i> Save`;
+    saveCustomerButton.classList.remove("disabled");
+    let customerForm=document.querySelector("#customerForm");
+    customerForm.classList.remove("was-validated");
+
+   
+})
 customerModal.addEventListener("show.bs.modal",(e)=>{
     let targetButton=e.relatedTarget;
     let fname=targetButton.getAttribute("data-fname");
