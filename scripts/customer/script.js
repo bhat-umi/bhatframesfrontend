@@ -1,26 +1,5 @@
 import baseUrl, { fetchEmployeeDetail, getToken } from "../main.js";
 fetchEmployeeDetail();
-// const customers=[
-//     {
-//     id:1,
-//     fname: "Asif",
-//     lname:"ali",
-//     phone: "1234567890",
-//     balance: 3000,
-//     address:"pampore",
-//     title:'Mr'
-//     },
-//     {
-//         id:2,
-//         fname: "Mohd",
-//         lname:'Youis',
-//         phone: "1234567890",
-//         balance: 6700,
-//         address:"pampore",
-//         title:'Ms'
-//     },
-
-// ]
 
 
 
@@ -160,6 +139,8 @@ customerForm.classList.add("was-validated");
         const Toast = new bootstrap.Toast(toastNotification);
         Toast.show();
         console.log(res);
+        page=1;
+        fetchRecords();
     }).catch(res=>{
 
        
@@ -221,6 +202,7 @@ customerModal.addEventListener("show.bs.modal",(e)=>{
 
 let isLoading=false;
 let page=1;
+let totalPages=9999;
 let fetchRecords=(api)=> {
     if (isLoading) return;
     isLoading = true;
@@ -236,6 +218,7 @@ let fetchRecords=(api)=> {
     let url=`${baseUrl}/customers/${api}?limit=4&page=${page}&${queryString}`
     console.log(url)
     //document.getElementById('loading-text').innerText = 'Loading...';
+    
     fetch(url,{
         method:'get',
         headers:{
@@ -250,20 +233,12 @@ let fetchRecords=(api)=> {
     return response.json(); // Parse the JSON data
   })
   .then((data) => {
-    // appendData(data); // Append data to the DOM
-   // offset += limit;
-
-    // Stop loading if no data is returned
-    // if (data.length < limit) {
-    //   document.getElementById('loading-text').innerText = 'No more data to load.';
-    //   window.removeEventListener('scroll', handleScroll);
-    // }
-    //cardContainer.textContent="";
     //if page ==1 clear the box first
     if(page===1)
     {
         cardContainer.innerHTML="";
     }
+    totalPages=data['total_pages'];
     let customers=data.data;
     customers.forEach((customer)=>{
         let carddata={
@@ -281,12 +256,16 @@ let fetchRecords=(api)=> {
     })
 
     page++;
+    if(page>totalPages)
+    {
+        cardContainer.innerHTML +=`<div class="text-muted"> That is It for now</div>` 
+    }
     console.log(data)
     
   })
   .catch((error) => {
     console.error('Error:', error);
-    //cardContainer.textContent = "Customers will appear here";
+    //cardContainer.innerHTML += "";
     //document.getElementById('loading-text').innerText = 'Failed to load data.';
   })
   .finally(() => {
@@ -306,10 +285,12 @@ let fetchRecords=(api)=> {
 document.querySelector("#sort-options").addEventListener("change",()=>{
    
     page=1;
+    totalPages=999;
     fetchRecords();
 })
 document.querySelector("#filter-options").addEventListener("change",()=>{
    page=1;
+   totalPages=999;
     fetchRecords();
 })
   //search and filter option
