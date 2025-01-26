@@ -304,7 +304,9 @@ document.getElementById('search-customers').addEventListener('input', function()
         if(isLoading)
                 return;
         if (searchQuery.length >= 3) {
+            cardContainer.innerHTML="<div class='text-muted'>No such customer</div>"
             
+
             page=1;
             fetchRecords("search");  
            // console.log("sedig",searchQuery)
