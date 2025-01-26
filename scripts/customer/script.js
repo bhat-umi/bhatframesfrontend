@@ -243,6 +243,11 @@ let fetchRecords=()=> {
     //   window.removeEventListener('scroll', handleScroll);
     // }
     //cardContainer.textContent="";
+    //if page ==1 clear the box first
+    if(page===1)
+    {
+        cardContainer.innerHTML="";
+    }
     let customers=data.data;
     customers.forEach((customer)=>{
         let carddata={
@@ -258,6 +263,7 @@ let fetchRecords=()=> {
         createCustomerCard(carddata)
 
     })
+
     page++;
     console.log(data)
     
@@ -273,15 +279,23 @@ let fetchRecords=()=> {
   });
 
   }
-  fetchRecords()
+  fetchRecords() //intial load
   const handleScroll=()=>{
     fetchRecords();
     console.log("hi")
   } 
   window.addEventListener('scroll', handleScroll);
 
-
-
+///when the sort are filter is changed sending a new fetch request instantly
+document.querySelector("#sort-options").addEventListener("change",()=>{
+   
+    page=1;
+    fetchRecords();
+})
+document.querySelector("#filter-options").addEventListener("change",()=>{
+   page=1;
+    fetchRecords();
+})
   //search and filter option
 
 const searchForm=document.querySelector("#customerSearch")
