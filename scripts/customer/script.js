@@ -214,8 +214,11 @@ let page=1;
 let fetchRecords=()=> {
     if (isLoading) return;
     isLoading = true;
-    let url=`${baseUrl}/customers/read?limit=4&page=${page}`
+
     let token=getToken("access_token");
+    let sortOptions=document.querySelector("#sort-options").value;
+    let filterOptions=document.querySelector("#filter-options").value;
+    let url=`${baseUrl}/customers/read?limit=4&page=${page}&sort_by=${sortOptions}&filter_by=${filterOptions}`
     //document.getElementById('loading-text').innerText = 'Loading...';
     fetch(url,{
         method:'get',
@@ -276,4 +279,12 @@ let fetchRecords=()=> {
     console.log("hi")
   } 
   window.addEventListener('scroll', handleScroll);
+
+
+
+  //search and filter option
+
+const searchForm=document.querySelector("#customerSearch")
+
+
   
