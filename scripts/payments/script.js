@@ -1,4 +1,5 @@
-import { fetchEmployeeDetail } from "../main.js";
+import baseUrl, { fetchEmployeeDetail } from "../main.js";
+import { getToken } from "../main.js";
 fetchEmployeeDetail();
 const paymentDetails = [{
     personName: "Asif Ali",
@@ -88,3 +89,85 @@ if (paymentDetails) {
 } else {
     cardContainer.textContent = " payments will appear here";
 }
+
+
+
+
+// JavaScript for searching customers as user types
+const customerInput = document.getElementById('payment-customer');
+const customerList = document.getElementById('customer-list');
+
+// Example customers, this should ideally come from a server-side API
+const customers = [
+    { name: 'Asif', phone: '123-456-7890' },
+    { name: 'Three way', phone: '987-654-3210' },
+    { name: 'Moile Hut', phone: '555-555-5555' }
+];
+
+customerInput.addEventListener('input', function() {
+   fetchCustomers();
+
+    
+});
+
+//Close the dropdown if clicked outside
+document.addEventListener('click', function(event) {
+    if (!customerInput.contains(event.target) && !customerList.contains(event.target)) {
+        customerList.style.display = 'none';
+    }
+});
+
+
+
+//fetch customers
+let  fetchCustomers=()=>{
+    let form=document.querySelector("#paymetForm")
+    let formData= new FormData(form);
+    const queryString = new URLSearchParams(formData).toString()
+    let token=getToken("access_token");
+    let url=`${baseUrl}/customers/search?limit=40&page=1&${queryString}`
+    fetch(url,{
+        method:'get',
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}` 
+        }
+    })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Error fetching data');
+    }
+    return response.json(); // Parse the JSON data
+  }).then(data=>{
+    
+    console.log(data)
+
+    let customers=data.data.map(c=>{
+        return {
+            name:c.customer_first_name+" "+c.customer_last_name,
+            phone:c.customer_contact.replace(/(\d{4})(\d{3})(\d{3})/, "$1-$2-$3"),
+            id:c['customer_id']
+        }
+    })
+    
+    customerList.innerHTML = ''; // Clear previous results
+
+    if (customers.length > 0) {
+        customerList.style.display = 'block';
+        customers.forEach(customer => {
+            const li = document.createElement('li');
+            li.classList.add('list-group-item');
+            li.textContent = `${customer.name} (${customer.phone})`;
+            li.onclick = function() {
+                customerInput.value = customer.name; // Set selected customer name
+                customerList.style.display = 'none'; // Hide the list
+            };
+            customerList.appendChild(li);
+        });
+    } else {
+        customerList.style.display = 'none'; // Hide if no match
+    }
+    console.log(data)
+  })
+}
+

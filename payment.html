@@ -196,11 +196,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="paymetForm">
                         <!-- Customer Search Dropdown -->
                         <div class="mb-3">
                             <label for="payment-customer" class="form-label">Select Customer</label>
-                            <input type="text" class="form-control" id="payment-customer" placeholder="Search and select customer">
+                            <input type="text" class="form-control" id="payment-customer" placeholder="Search and select customer" name="search_query">
                             <ul id="customer-list" class="list-group mt-2" style="display:none;"></ul> <!-- List of matching customers -->
                         </div>
     
@@ -254,51 +254,7 @@
     <script type="module" src="./scripts/main.js"></script>
     <script type="module" src="./scripts/payments/script.js"></script>
     
-    <script>
-        // JavaScript for searching customers as user types
-        const customerInput = document.getElementById('payment-customer');
-        const customerList = document.getElementById('customer-list');
-        
-        // Example customers, this should ideally come from a server-side API
-        const customers = [
-            { name: 'Asif', phone: '123-456-7890' },
-            { name: 'Three way', phone: '987-654-3210' },
-            { name: 'Moile Hut', phone: '555-555-5555' }
-        ];
-    
-        customerInput.addEventListener('input', function() {
-            const searchTerm = customerInput.value.toLowerCase();
-            const filteredCustomers = customers.filter(customer =>
-                customer.name.toLowerCase().includes(searchTerm) ||
-                customer.phone.includes(searchTerm)
-            );
-    
-            customerList.innerHTML = ''; // Clear previous results
-    
-            if (filteredCustomers.length > 0) {
-                customerList.style.display = 'block';
-                filteredCustomers.forEach(customer => {
-                    const li = document.createElement('li');
-                    li.classList.add('list-group-item');
-                    li.textContent = `${customer.name} (${customer.phone})`;
-                    li.onclick = function() {
-                        customerInput.value = customer.name; // Set selected customer name
-                        customerList.style.display = 'none'; // Hide the list
-                    };
-                    customerList.appendChild(li);
-                });
-            } else {
-                customerList.style.display = 'none'; // Hide if no match
-            }
-        });
-    
-        // Close the dropdown if clicked outside
-        document.addEventListener('click', function(event) {
-            if (!customerInput.contains(event.target) && !customerList.contains(event.target)) {
-                customerList.style.display = 'none';
-            }
-        });
-    </script>
+   
     
 
     <footer class="bg-primary text-white text-center">
