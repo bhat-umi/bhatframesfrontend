@@ -74,3 +74,60 @@ if(logOutButton)
 {
     logOutButton.addEventListener("click",logOut)
 }
+
+
+
+
+
+///notifications
+const showNotification=(message)=>
+{
+const scrollWrapper = document.createElement('div');
+scrollWrapper.classList.add("navbar", "bg-warning");
+ 
+
+// Add styles using JavaScript for scrolling effect
+scrollWrapper.style.whiteSpace = 'nowrap'; // Prevent text from wrapping
+scrollWrapper.style.overflow = 'hidden'; // Hide the overflow of the text
+scrollWrapper.style.width = '100%'; // Make sure it takes full width
+
+// Create a container for the scrolling text
+const scrollText = document.createElement('strong');
+scrollText.style.display = 'inline-block'; // Inline-block for the scrolling text
+scrollText.innerText =message;
+scrollText.style.transform="translateX(100%)"
+// Apply animation to scroll text
+scrollText.style.animation = 'scrollLeftToRight 10s 750ms linear';
+
+// Create the keyframes for scrolling animation
+const style = document.createElement('style');
+style.innerHTML = `
+  @keyframes scrollLeftToRight {
+    0% {
+   
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+      
+      
+    }
+  }
+`;
+
+// Append the style to the head
+document.head.appendChild(style);
+
+// Replace the inner content of the scrollWrapper with the scrollable text
+scrollWrapper.innerHTML = '';
+scrollWrapper.appendChild(scrollText);
+
+// Insert the notification below the navbar
+const navbar = document.querySelector('.navbar');
+navbar.insertAdjacentElement('afterend', scrollWrapper);
+setTimeout(()=>{
+    scrollWrapper.classList.add("fade"); 
+},9999)
+
+}
+showNotification( "Site Under Maintenance: We're adding new features, and some parts of the site might not work as expected. Thank you for your patience!")
