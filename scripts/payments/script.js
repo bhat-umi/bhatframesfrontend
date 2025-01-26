@@ -159,7 +159,8 @@ let  fetchCustomers=()=>{
             li.classList.add('list-group-item');
             li.textContent = `${customer.name} (${customer.phone})`;
             li.onclick = function() {
-                customerInput.value = customer.name; // Set selected customer name
+                customerInput.value = customer.name;
+                form.querySelector("#cid").value=customer.id;
                 customerList.style.display = 'none'; // Hide the list
             };
             customerList.appendChild(li);
@@ -171,3 +172,45 @@ let  fetchCustomers=()=>{
   })
 }
 
+const paymentSave=document.querySelector("#paymentSave")
+paymentSave.addEventListener("click",(e)=>{
+
+    let paymentForm=document.querySelector("#paymetForm")
+    paymentForm.classList.add("was-validated");
+    if(!paymentForm.checkValidity())
+    {
+        console.log("canceled save")
+        return;
+    }
+    let formdata= new FormData(paymentForm);
+    let data={
+        customer_id:formdata.get('customer_id'),
+        amount:formdata.get('amount'),        
+        payment_date:formdata.get('payment_date'),
+        payment_method:formdata.get('payment_method'),
+        payment_uid:formdata.get('payment_uid'),
+        comments:formdata.get('comments'),
+        
+
+    }
+    const token = getToken('access_token')
+    let url=`${baseUrl}/payments/create`
+   
+    fetch(url,{
+        method:'post',
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}` 
+        },
+        body:JSON.stringify(data)
+    }).then(res=>{
+        if(!res.ok)
+        {
+            throw new Error(res.statusText);
+        }
+        return res;
+    }).then(res=>{
+        console.log(res);
+    })
+
+})

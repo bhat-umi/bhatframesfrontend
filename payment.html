@@ -196,11 +196,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+
                     <form id="paymetForm">
                         <!-- Customer Search Dropdown -->
+                         <input type="hidden" name="customer_id" id="cid">
                         <div class="mb-3">
                             <label for="payment-customer" class="form-label">Select Customer</label>
-                            <input type="text" class="form-control" id="payment-customer" placeholder="Search and select customer" name="search_query">
+                            <input type="text" class="form-control" id="payment-customer" placeholder="Search and select customer" name="search_query" required>
                             <ul id="customer-list" class="list-group mt-2" style="display:none;"></ul> <!-- List of matching customers -->
                         </div>
     
@@ -209,34 +211,37 @@
                         <!-- Amount -->
                         <div class="mb-3">
                             <label for="payment-amount" class="form-label">Amount</label>
-                            <input type="number" class="form-control" id="payment-amount" placeholder="Enter payment amount">
+                            <input type="number" min="1" class="form-control" id="payment-amount" placeholder="Enter payment amount" name="amount">
+                            <div class="invalid-feedback">Invalid Amount</div>
                         </div>
     
                         <!-- Date -->
                         <div class="mb-3">
                             <label for="payment-date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="payment-date">
+                            <input type="date" class="form-control" id="payment-date" name="payment_date" required>
+                            <div class="invalid-feedback">Please Select Date</div>
                         </div>
     
                         <!-- Payment Method -->
                         <div class="mb-3">
                             <label for="payment-method" class="form-label">Payment Method</label>
-                            <select id="payment-method" class="form-select">
+                            <select id="payment-method" class="form-select"  name="payment_method" required>
                                 <option value="cash">Cash</option>
                                 <option value="online">Online</option>
                                 <option value="Cheque">Cheque</option>
                             </select>
+                            <div class="invalid-feedback">Select Payment Method</div>
                         </div>
                          <!-- Payment UID -->
                          <div class="mb-3">
                             <label for="payment-uid" class="form-label">Payment UID/Cheque id</label>
-                            <input type="text" class="form-control" id="payment-uid" placeholder="Enter payment UID (e.g. 123456)">
+                            <input type="text" name="payment_uid" class="form-control" id="payment-uid" placeholder="Enter payment UID (e.g. 123456)">
                         </div>
     
                         <!-- Check Number -->
                         <div class="mb-3">
                             <label for="payment-check" class="form-label">Comments</label>
-                            <textarea class="form-control" id="payment-comments" placeholder="Enter any comments or notes" rows="3"></textarea>
+                            <textarea class="form-control" id="payment-comments" placeholder="Enter any comments or notes" rows="3"  name="comments"></textarea>
                         </div>
                         
                     </form>
@@ -244,7 +249,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-circle"></i> Discard
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" id="paymentSave">
                         
                         <i class="bi bi-save"></i> Save</button>
                 </div>
