@@ -138,9 +138,9 @@
                     <i class="bi bi-person-plus"></i> New Customer
                 </button>
             </div>
-
+            <form id="">
             <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Search Customers..." id="search-customers">
+                <input type="text" class="form-control" placeholder="Search Customers..." id="search-customers" name="query">
             </div>
             <div class=" row   mb-3">
                 <!-- Sort Dropdown -->
@@ -148,7 +148,8 @@
                     <label for="sort-options" class="me-2">
                         <i class="bi bi-sort-alpha-down"></i> Sort By:
                     </label>
-                    <select id="sort-options" class="form-select form-select-sm d-inline-block w-auto flex-fill">
+                    <select id="sort-options" class="form-select form-select-sm d-inline-block w-auto flex-fill" name="sort">
+                        <option value="recetly-added">Recetly Added</option>
                         <option value="name-asc">Name (A-Z)</option>
                         <option value="name-desc">Name (Z-A)</option>
                         <option value="balance-high">Balance (High to Low)</option>
@@ -161,14 +162,14 @@
                     <label for="filter-options" class="me-2">
                         <i class="bi bi-funnel"></i> Filter:
                     </label>
-                    <select id="filter-options" class="form-select form-select-sm d-inline-block w-auto flex-fill">
+                    <select id="filter-options" class="form-select form-select-sm d-inline-block w-auto flex-fill" name="filter">
                         <option value="all">All Customers</option>
                         <option value="positive-balance">With Balance</option>
                         <
                     </select>
                 </div>
             </div>
-
+            </form>
             <!--  Cards will apear here -->
 
             <div id="card-container" class="text-center text-muted fw-bold">

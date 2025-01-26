@@ -210,10 +210,11 @@ customerModal.addEventListener("show.bs.modal",(e)=>{
 })
 
 let isLoading=false;
+let page=1;
 let fetchRecords=()=> {
     if (isLoading) return;
     isLoading = true;
-    let url=`${baseUrl}/customers/read`
+    let url=`${baseUrl}/customers/read?limit=4&page=${page}`
     let token=getToken("access_token");
     //document.getElementById('loading-text').innerText = 'Loading...';
     fetch(url,{
@@ -238,7 +239,7 @@ let fetchRecords=()=> {
     //   document.getElementById('loading-text').innerText = 'No more data to load.';
     //   window.removeEventListener('scroll', handleScroll);
     // }
-    cardContainer.textContent="";
+    //cardContainer.textContent="";
     let customers=data.data;
     customers.forEach((customer)=>{
         let carddata={
@@ -254,16 +255,25 @@ let fetchRecords=()=> {
         createCustomerCard(carddata)
 
     })
+    page++;
     console.log(data)
+    
   })
   .catch((error) => {
     console.error('Error:', error);
-    cardContainer.textContent = "Customers will appear here";
+    //cardContainer.textContent = "Customers will appear here";
     //document.getElementById('loading-text').innerText = 'Failed to load data.';
   })
   .finally(() => {
     isLoading = false;
+    //fetchRecords()
   });
 
   }
   fetchRecords()
+  const handleScroll=()=>{
+    fetchRecords();
+    console.log("hi")
+  } 
+  window.addEventListener('scroll', handleScroll);
+  
