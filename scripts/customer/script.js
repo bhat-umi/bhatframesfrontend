@@ -221,14 +221,20 @@ customerModal.addEventListener("show.bs.modal",(e)=>{
 
 let isLoading=false;
 let page=1;
-let fetchRecords=()=> {
+let fetchRecords=(api)=> {
     if (isLoading) return;
     isLoading = true;
+    if(!api)
+    {
+        api="read"
+    }
 
     let token=getToken("access_token");
-    let sortOptions=document.querySelector("#sort-options").value;
-    let filterOptions=document.querySelector("#filter-options").value;
-    let url=`${baseUrl}/customers/read?limit=4&page=${page}&sort_by=${sortOptions}&filter_by=${filterOptions}`
+    let formData=new FormData(document.querySelector("#customerSearchForm"))
+    const queryString = new URLSearchParams(formData).toString();
+    
+    let url=`${baseUrl}/customers/${api}?limit=4&page=${page}&${queryString}`
+    console.log(url)
     //document.getElementById('loading-text').innerText = 'Loading...';
     fetch(url,{
         method:'get',
@@ -309,6 +315,20 @@ document.querySelector("#filter-options").addEventListener("change",()=>{
   //search and filter option
 
 const searchForm=document.querySelector("#customerSearch")
+
+
+
+document.getElementById('search-customers').addEventListener('input', function() {
+    const searchQuery = this.value;
+        if(isLoading)
+                return;
+        if (searchQuery.length >= 3) {
+            
+            page=1;
+            fetchRecords("search");  
+           // console.log("sedig",searchQuery)
+        }
+});
 
 
   

@@ -140,9 +140,9 @@
                     <i class="bi bi-person-plus"></i> New Customer
                 </button>
             </div>
-            <form id="">
+            <form id="customerSearchForm">
             <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Search Customers..." id="search-customers" name="query">
+                <input type="text" class="form-control" placeholder="Search Customers..." id="search-customers" name="search_query">
             </div>
             <div class=" row   mb-3">
                 <!-- Sort Dropdown -->
@@ -150,7 +150,7 @@
                     <label for="sort-options" class="me-2">
                         <i class="bi bi-sort-alpha-down"></i> Sort By:
                     </label>
-                    <select id="sort-options" class="form-select form-select-sm d-inline-block w-auto flex-fill" name="sort">
+                    <select id="sort-options" class="form-select form-select-sm d-inline-block w-auto flex-fill" name="sort_by">
                         <option value="recently-added">Recetly Added</option>
                         <option value="name-asc">Name (A-Z)</option>
                         <option value="name-desc">Name (Z-A)</option>
@@ -164,7 +164,7 @@
                     <label for="filter-options" class="me-2">
                         <i class="bi bi-funnel"></i> Filter:
                     </label>
-                    <select id="filter-options" class="form-select form-select-sm d-inline-block w-auto flex-fill" name="filter">
+                    <select id="filter-options" class="form-select form-select-sm d-inline-block w-auto flex-fill" name="filter_by">
                         <option value="all">All Customers</option>
                         <option value="with_balance">With Balance</option>
                         
