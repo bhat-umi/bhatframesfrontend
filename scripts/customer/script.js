@@ -301,8 +301,15 @@ const searchForm=document.querySelector("#customerSearch")
 
 document.getElementById('search-customers').addEventListener('input', function() {
     const searchQuery = this.value;
-        if(isLoading)
+        
+        if(searchQuery.length==0)
+            {
+                page=1;
+                fetchRecords();
                 return;
+            } 
+            if(isLoading)
+                return; 
         if (searchQuery.length >= 3) {
             cardContainer.innerHTML="<div class='text-muted'>No such customer</div>"
             
