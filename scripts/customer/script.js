@@ -31,7 +31,7 @@ function createCustomerCard(data) {
    let name=data.fname+" "+data.lname;
    let phone=data.phone.replace(/(\d{4})(\d{3})(\d{3})/, "$1-$2-$3");
 
-    
+    console.log(data)
 
     // Create card element
     const card = document.createElement("div");
@@ -76,6 +76,8 @@ function createCustomerCard(data) {
     viewButton.setAttribute("data-id",data.id);
     viewButton.setAttribute("data-balance",data.balance);
     viewButton.setAttribute("data-action","Update");
+    viewButton.setAttribute("data-url",`/customers/update/${data.id}`);
+    viewButton.setAttribute("data-method","put");
 
     viewButton.innerHTML = `<i class="bi bi-pencil-square me-1"></i> Update`;
     buttonsRow.appendChild(viewButton);
@@ -130,10 +132,13 @@ customerForm.classList.add("was-validated");
         balance:parseInt(formdata.get('balance')),
 
     }
+    let method=formdata.get('apimethod')
+    let apiPath=formdata.get('apipath')
     const token = getToken('access_token')
-    let url=`${baseUrl}/customers/create`
+    let url=`${baseUrl}${apiPath}`
+    console.log(url);
     fetch(url,{
-        method:'post',
+        method:method,
         headers:{
             'Content-Type':'application/json',
             'Authorization': `Bearer ${token}` 
@@ -190,6 +195,8 @@ customerModal.addEventListener("show.bs.modal",(e)=>{
     let title=targetButton.getAttribute("data-title");
     let id=targetButton.getAttribute("data-id");
     let action=targetButton.getAttribute("data-action");
+    let apimethod=targetButton.getAttribute("data-method");
+    let apiurl=targetButton.getAttribute("data-url");
 
     customerModal.querySelector('#fname').value=fname;
     customerModal.querySelector('#lname').value=lname;
@@ -199,6 +206,9 @@ customerModal.addEventListener("show.bs.modal",(e)=>{
     customerModal.querySelector('#id').value=id;
     customerModal.querySelector('#title').value=title
     customerModal.querySelector('#action').textContent=action+" Customer";
+    customerModal.querySelector('#apipath').value=apiurl;
+    customerModal.querySelector('#apimethod').value=apimethod;
+
     
 
 
@@ -251,7 +261,7 @@ let fetchRecords=()=> {
     let customers=data.data;
     customers.forEach((customer)=>{
         let carddata={
-    id:customer['id'],
+    id:customer['customer_id'],
     fname:customer['customer_first_name'] ,
     lname:customer['customer_last_name'],
     phone: customer['customer_contact'],

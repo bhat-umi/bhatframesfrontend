@@ -134,6 +134,8 @@
                 data-title=""
                 data-id="-1"
                 data-balance=""
+                data-url="/customers/create"
+                data-method="post"
                 data-bs-toggle="modal" data-bs-target="#customermodal">
                     <i class="bi bi-person-plus"></i> New Customer
                 </button>
@@ -252,6 +254,9 @@
                             required  min="0">
                             <div class="invalid-feedback">Invalid Opening Balance</div>
                         </div>
+                        <!-- url & method -->
+                         <input type="hidden" id="apipath" name="apipath">
+                         <input type="hidden" id="apimethod" name="apimethod">
                     </form>
                 </div>
                 <div class="modal-footer">
